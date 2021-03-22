@@ -50,9 +50,9 @@ See MockAPI documentation for query options: https://mockapi.io/docs
 
 Simply query the movie API and print out the response.
 
-### 2. Display the data in a HTML table
+### 2. Display the data in an HTML `<table>`
 
-Include as many columns as possible. E.g. the title, an <img> element showing the `imageUrl`, the list of actors etc.
+Include as many columns as possible. E.g. the title, an `<img>` element showing the `imageUrl`, the IMDB rating, the list of actors etc.
 
 ### 3. Format numeric columns
 
