@@ -1,4 +1,5 @@
-# Frontend Candidate Test
+# Frontend Challenge
+
 ## Introduction
 
 We have a quick coding challenge we'd like you to try. The goal is for you to have a bit of fun showing us your frontend skills and to give us a sense for how you write code and solve problems.
@@ -14,6 +15,7 @@ We have a simple API that returns a JSON array containing details of top rated *
 ### Movies
 
 An array of movie objects with the following structure:
+
 
 ```json
 {
