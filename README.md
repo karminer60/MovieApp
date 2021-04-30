@@ -25,7 +25,7 @@ The goal is to implement a simple web app that lists top-rated movies in a table
 
 Fetch the movie data dynamically from: <https://6049e293fb5dcc001796aba6.mockapi.io/>
 
-### 2. Display data in a <table> element
+### 2. Display data in a table
 
 Display the movies in a `<table>` element with all the columns shown in the example:
 
