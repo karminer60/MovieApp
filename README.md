@@ -1,171 +1,122 @@
-# Frontend Challenge
+# Front-End Challenge
 
-## Introduction
+The goal is to implement a simple web app that lists top-rated movies in a table and allows the user to filter and sort the results.
 
-We have a quick coding challenge we'd like you to try. The goal is for you to have a bit of fun showing us your frontend skills and to give us a sense for how you write code and solve problems.
+[Click here to see an example.](http://fp-public-tests.s3-website-us-east-1.amazonaws.com/hr/frontend-challenge/)
 
-We have a simple API that returns a JSON array containing details of top rated **movies**. We would like you to use **HTML**, **CSS** and **JavaScript** to read the API and display it in a **table**. You'll then build upon this to add **sorting** and **filtering** capabilities.
+![Example screenshot](images/screenshot.png)
 
-- Feel free to use any frameworks you would like to achieve the task ⚡
-- Don't hesitate to ask questions if you need clarification 😄 
-- Try to explain and talk about your thought process and decisions as you go 🤔
+## Instructions
 
-## API
+- Try to implement the **features** described below, preferably using a modern frontend framework such as Vue.js or React.
 
-### Movies
+    **Vue.js** would be preferable since this is what we use at Fanplayr, however you are free to use whatever makes you most productive.
 
-An array of movie objects with the following structure:
+- Aim for a **similar layout** as in the example.
 
+    You may use pure CSS frameworks such as Bootstrap or Tailwind for styling. (We used Bootstrap in the example).
 
-```json
-{
-  "id": "tt0111161",
-  "url": "https://www.imdb.com/title/tt0111161/?ref_=adv_li_tt",
-  "imageUrl": "https://m.media-amazon.com/images/M/MV5BMDFkYTc0MGEtZmNhMC00ZDIzLWFmNTEtODM1ZmRlYWMwMWFmXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_UX67_CR0,0,67,98_AL_.jpg",
-  "title": "The Shawshank Redemption",
-  "imdbRating": 9.3,
-  "metascoreRating": 80,
-  "runtimeMins": 142,
-  "genres": [
-    "Drama"
-  ],
-  "description": "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
-  "director": "Frank Darabont",
-  "actors": [
-    "Tim Robbins",
-    "Morgan Freeman",
-    "Bob Gunton",
-    "William Sadler"
-  ],
-  "votes": "2360251",
-  "gross": "28,341,469"
-}
-```
+- **Avoid** using component/UI frameworks to handle the display, filtering and sorting the data in the table. The goal is to implement this yourself.
 
-**API:** https://6049e293fb5dcc001796aba6.mockapi.io/movies
 
-See MockAPI documentation for query options: https://mockapi.io/docs
+## Features
 
-## Tasks
+### 1. Fetch data
 
-### 1. Query the movie API
+Fetch the movie data dynamically from: https://6049e293fb5dcc001796aba6.mockapi.io/
 
-Simply query the movie API and print out the response.
+### 2. Display data in a `<table>` element
 
-### 2. Display the data in an HTML `<table>`
+Display the movies in a `<table>` element with all the columns shown in the example:
 
-Include as many columns as possible. E.g. the title, an `<img>` element showing the `imageUrl`, the IMDB rating, the list of actors etc.
+  - Image
+  - Title
+    - The title should be a link that opens the IMDB page in a new browser tab.
+    - The movie description should appear below the title in a smaller font.
+  - Year
+  - Rating
+  - Runtime
+  - Votes
+  - Genres
 
-### 3. Format numeric columns
+### 3. Loading message
 
-Let's improve the formatting of numeric columns (e.g. `votes` and `gross`).
+Show a loading message such as the following while the data is being fetched:
 
-- Align numeric columns headers and values to the right.
-- Format numeric values as numbers grouped by thousands. E.g. "2360251" becomes "2,360,251".
+![Loading message](images/loading.png)
 
-### 4. Sorting
+### 4. Filter by Title
 
-Allow the user to sort the table by clicking a column header.
+Add an `<input>` element which allows the user to filter the results based on the "title" column.
 
-  - By default the table should not be sorted.
-  - Clicking a column header should cycle it through the following sorting states: `NONE -> ASC -> DESC -> NONE`.
-  - When a column is sorted, show the sort direction next to the header name.
+![No results message](images/filter_title.png)
 
-**Discuss:** How would you implement multiple levels of sorting?
+### 5. No results message
 
-### 5. Basic filtering
+Show a message to the user when they use filters which return no results:
 
-Add a text input field above the table which filters the rows.
+![No results message](images/no_results.png)
 
-  - Rows should be displayed in the table if **ANY** of the values in the row contain the search input.
+### 6. Filter by Genre
 
-### 6. Filtering specific columns
+Add a `<select>` element which allows the user to filter based movie genre.
 
-Instead of filtering on any values in the rows, add a "column" dropdown which allows users to choose a specific column (row property) to filter on.
+- The first option should skip filtering by genre, e.g. "(Any genre)".
 
-For example, if the user chooses the **title** column in the dropdown, the filtering should only apply to rows where the `title` property contains the search input.
+- The action list of genre options should:
 
-### 7. Filtering operators
+    1. Be dynamically generated based on the movie data.
 
-So far the filtering comparison has always been a partial string match (e.g. does the row value "contain" the search input?).
+    2. Be sorted alphabetically.
 
-Now we'd like to give users the ability to choose a filtering "operator" that determines how comparisons are made.
+    3. Include the number of movies in the genre in parentheses.
 
-Add an additional "operator" dropdown between the column dropdown and the filter input. Allow the user to choose one of the following operators:
+For example, the first few options in the `<select>` should include:
 
-- **Equals** - Matches when the search input exactly equals the row value.
-- **Not equals** - Opposite of **equals**.
-- **Greater than** - Matches when the search input is greater than (`>`) the row value.
-- **Less than**
-- **Contains** - Partial string match.
-- **Not contains** - Opposite of **contains**.
+- (Any genre)
+- Action (24)
+- Adventure (26)
+- Drama (24)
 
-For example, the user should be able to filter all movies with a rating higher than 9.
+![No results message](images/filter_genre.png)
 
-### 8. Wildcard operators
+### 7. Sorting
 
-Add a new operator called "Contains wildcard" that allows users to filter using wildcard characters (`*`). This is similar to the `LIKE` operator in SQL.
+- Add one `<select>` element which allows the user to sort by the following columns:
 
-Examples:
+    - (None) - No sorting
+    - Title
+    - Year
+    - Rating
+    - Runtime
+    - Votes
 
-- If the filter column is "title" and the filter input is `The*`, the table should show all rows with titles that begin with "The".
+- Add a second `<select>` element which allows the user to choose the direction to sort the results:
 
-- If the filter column is "title" and the filter input is `*r`, the table should show all rows with titles that end with the letter "r".
+    - Ascending
+    - Descending
 
-### 9. Filtering on array columns
+- By default, sort by "Rating" in the "Descending" order.
 
-When filtering on a column with array values (e.g. `genres` and `actors`), allow the user to specify a comma-separated list of values. The filtering logic should match rows where **ANY** of the comma-separated values matches **AT LEAST ONE** element in the row array.
+![No results message](images/sorting.png)
 
-For example, if the user is filtering on the "genre" column, uses the "equals" operator and specifies "Drama, Action" as the input, it should match all rows where at least one of the genres exactly equals "Drama" or "Action".
+### 8. Limiting results
 
-### 10. Multiple filters!
+Add an `<input>` element which allows the user to limit the maximum number of results shown.
 
-Allow the user to add and remove multiple filters. When the user has configured multiple filters, a row should only appear in the table if it satisfies **ALL** filters.
+![No results message](images/row_limit.png)
 
-### 11. Save sort and filter states
+### 9. Reset button
 
-Store all the configured filters and current sort state locally in the browser so that if the page is refreshed the previous state is applied again.
+Add a button to reset all the options.
 
-### 12. Multi-select dropdown for array filters
+### 10. Save preferences
 
-The `genres` and `actors` movie properties are arrays. When the user creates a filter based on these properties, instead of showing a text input, show them a select input that allows them to choose multiple values. The select input should provide all possible options for the user to choose from.
+Store the filter preferences in the browser so that when the page is refreshed it returns to the same state after the movie data is loaded.
 
-Feel free to implement this as a normal `<select>` element, or using a plugin/library of your choice.
 
-### 13. Graph movie views by date
+## Bonus
 
-There's an additional API which returns an array of objects containing a date and the number of times the movie was viewed. When the user clicks a movie in the table, show an overlay which shows this data in a graph.
+Discuss how you would implement the "Advanced Filter" feature in the demo:
 
-Feel free to use any charting library you like.
-
-For example, an API call for the first movie (https://6049e293fb5dcc001796aba6.mockapi.io/movies/tt0111161/views) will return the following structure:
-
-```json
-[
-  {"id":"1","movieId":"tt0111161","date":"2021-03-11T05:44:05.868Z","views":87793},
-  {"id":"26","movieId":"tt0111161","date":"2021-03-11T04:06:48.454Z","views":33206},
-  {"id":"51","movieId":"tt0111161","date":"2021-03-10T13:00:39.555Z","views":45890},
-  {"id":"76","movieId":"tt0111161","date":"2021-03-11T10:39:42.410Z","views":12449},
-  {"id":"99","movieId":"tt0111161","date":"2021-03-10T19:52:59.474Z","views":23673},
-  {"id":"100","movieId":"tt0111161","date":"2021-03-10T18:59:34.462Z","views":81708}
-]
-```
-
-**Bonus**: Only load the charting library on demand (if no movie is clicked, the library shouldn't be downloaded in the browser).
-
-## Quick discussion
-
-You don't have to implement these tasks, but let's discuss how you might achieve them:
-
-1. Make the table header row sticky and limit the height of the table so that it scrolls.
-
-2. Implement pagination.
-
-3. Instead of loading all 50 movies at once, load 1 page at a time with a configurable limit of items per page. 
-
-    For example, if `limit=7` only 7 items will be fetched per page from the API:
-
-    - First <https://6049e293fb5dcc001796aba6.mockapi.io/movies?page=1&limit=7>
-    - Then <https://6049e293fb5dcc001796aba6.mockapi.io/movies?page=2&limit=7> 
-    - ...etc until all movies are loaded
-
+![No results message](images/advanced_filters.gif)
