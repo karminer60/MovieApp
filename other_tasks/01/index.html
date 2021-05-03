@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Clicker</title>
+</head>
+<body>
+  <button>Click!</button>
+  <script>
+    const counter = {
+      cnt: 0,
+      increment: function() {
+        cnt++;
+        console.log(cnt);
+      }
+    };
+
+    const button = document.getElementsByTagName('button')[0];
+    button.addEventListener('click', counter.increment(), false);
+  </script>
+</body>
+</html>
