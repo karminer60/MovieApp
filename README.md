@@ -23,7 +23,7 @@ The goal is to implement a simple web app that lists top-rated movies in a table
 
 ### 1. Fetch data
 
-Fetch the movie data dynamically from: <https://6049e293fb5dcc001796aba6.mockapi.io/>
+Fetch the movie data dynamically from: <https://6049e293fb5dcc001796aba6.mockapi.io/movies>
 
 ### 2. Display data in a table
 
