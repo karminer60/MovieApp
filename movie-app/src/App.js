@@ -6,8 +6,12 @@ import MovieList from './MovieList.js';
 import axios from 'axios'
 import React,{ useEffect, useState } from 'react';
 
+
+
 function App() {
-  const [movieList, setMovieList] = useState([]);
+  const [movieList, setMovieList] = useState(null);
+  
+  
 
   //axios is used to make HTTP requests -  HTTP is the protocol used in the world wide web that determines
   //how messages are formatted and transmitted, and what actions web servers and browsers should take in 
@@ -34,10 +38,11 @@ function App() {
     useEffect(() => {
       getMovies();
     }, [])
+
     
     return (
       <div className="App">
-      
+    
       
           <MovieList movies={movieList} />
         
