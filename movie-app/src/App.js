@@ -47,7 +47,7 @@ function App() {
       <div className="container">
 
         <MovieList movies={movieList} />
-        
+
       </div>
 
     </div>

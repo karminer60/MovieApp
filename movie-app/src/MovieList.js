@@ -14,11 +14,11 @@ export default function MovieList(props) {
     const [searchValue, setSearchValue] = useState('');
 
     const onChangeHandler = e => {
-        setSearchValue(e.target.value.toLowerCase())
-    }
+        setSearchValue(e.target.value.toLowerCase());
+    };
     //filtered variable checks for no movies list, else filters for searchValue set in onChangeHandler through user input event
     //filtered variable is made available to provide 'no results message' in return
-    const filtered = movies === null ? null : movies.filter(movie => movie.title.toLowerCase().includes(searchValue))
+    const filtered = movies === null ? null : movies.filter(movie => movie.title.toLowerCase().includes(searchValue));
 
     //state in input changed through onChange event and onChangeHandler, event.target.value has what it is changed to; input is a controlled component
     return (
@@ -64,12 +64,12 @@ export default function MovieList(props) {
                                 filtered.map(movie => (
                                     <tr>
                                         <td>
-                                            <img style={{width:"8rem", height: "11rem" }} src={movie.imageUrl} />
+                                            <img style={{ width: "8rem", height: "11rem" }} src={movie.imageUrl} />
 
                                         </td>
                                         <td>
                                             <a href={movie.url}>
-                                                <h2 style={{fontSize: "17px"}}>{movie.title}</h2>
+                                                <h2 style={{ fontSize: "17px" }}>{movie.title}</h2>
                                             </a>
 
                                             <p>
@@ -88,7 +88,7 @@ export default function MovieList(props) {
                                         </td>
 
                                         <td>
-                                            <p>{movie.runtimeMins}</p>
+                                            <p>{movie.runtimeMins} min</p>
 
                                         </td>
 
@@ -98,7 +98,23 @@ export default function MovieList(props) {
                                         </td>
 
                                         <td>
-                                            <p>{movie.genres}</p>
+                                            <p>{movie.genres.map((genre, index) => {
+
+                                                if (index == 0) {
+                                                    return genre;
+                                                }
+
+                                                else if (index == movie.genres.length - 1) {
+                                                    return " and " + genre;
+                                                }
+
+                                                else {
+                                                    return ", " + genre;
+                                                }
+
+
+                                            })}
+                                            </p>
 
                                         </td>
 
