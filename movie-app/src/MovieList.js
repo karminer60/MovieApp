@@ -64,12 +64,12 @@ export default function MovieList(props) {
                                 filtered.map(movie => (
                                     <tr>
                                         <td>
-                                            <img src={movie.imageUrl} />
+                                            <img style={{width:"8rem", height: "11rem" }} src={movie.imageUrl} />
 
                                         </td>
                                         <td>
                                             <a href={movie.url}>
-                                                <h2>{movie.title}</h2>
+                                                <h2 style={{fontSize: "17px"}}>{movie.title}</h2>
                                             </a>
 
                                             <p>
