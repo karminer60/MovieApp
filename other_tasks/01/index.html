@@ -9,13 +9,15 @@
     const counter = {
       cnt: 0,
       increment: function() {
-        cnt++;
-        console.log(cnt);
+        //in order to access cnt we need to use this to acces it from the object
+        this.cnt++;
+        console.log(this.cnt);
       }
     };
 
     const button = document.getElementsByTagName('button')[0];
-    button.addEventListener('click', counter.increment(), false);
+    //event listener needs call back function
+    button.addEventListener('click', () => counter.increment(), false);
   </script>
 </body>
 </html>
