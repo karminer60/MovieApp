@@ -9,7 +9,7 @@ import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 
-
+//create react app
 function App() {
   const [movieList, setMovieList] = useState(null);
 
