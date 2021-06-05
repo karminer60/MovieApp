@@ -24,20 +24,32 @@ export default function MovieList(props) {
     return (
         <>
             <h1>Top Movies</h1>
-            <div className="search-bar" style={{ background: "#eee", paddingBottom: "15px", paddingLeft: "15px" }}>
-                <div className="input-group"  >
-                    <label for="searchBar" className="form-label">Filter Title</label>
-                    <input
-                        className="form-control"
-                        type="text"
-                        onChange={onChangeHandler}
-                        name="searchValue"
-                        value={searchValue}
-                        placeholder="Filter titles"
-                        id="searchBar"
+            <div className="filtersSection">
+                <div className="search-bar" style={{ background: "#eee", paddingBottom: "15px", paddingLeft: "15px" }}>
+                    <div className="input-group"  >
+                        <label for="searchBar" className="form-label">Filter Title</label>
+                        <input
+                            className="form-control"
+                            type="text"
+                            onChange={onChangeHandler}
+                            name="searchValue"
+                            value={searchValue}
+                            placeholder="Filter titles"
+                            id="searchBar"
 
 
-                    />
+                        />
+                    </div>
+                </div>
+                <div className="selectFilter">
+                    <select>
+                        <option value="genre1">Genre 1</option>
+                        <option value="genre2">Genre 2</option>
+                        <option value="genre3">Genre 3</option>
+                        <option value="genre4">Genre 4</option>
+
+                    </select>
+
                 </div>
             </div>
 
