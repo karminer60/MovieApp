@@ -24,34 +24,89 @@ export default function MovieList(props) {
     return (
         <>
             <h1>Top Movies</h1>
-            <div className="filtersSection">
-                <div className="search-bar" style={{ background: "#eee", paddingBottom: "15px", paddingLeft: "15px" }}>
-                    <div className="input-group"  >
-                        <label for="searchBar" className="form-label">Filter Title</label>
-                        <input
-                            className="form-control"
-                            type="text"
-                            onChange={onChangeHandler}
-                            name="searchValue"
-                            value={searchValue}
-                            placeholder="Filter titles"
-                            id="searchBar"
+            <table className="table" style={{ background: "#eee", paddingBottom: "15px", paddingLeft: "15px" }} >
+
+                <tbody>
+                    <tr>
+                        <td>
+                            <div className="search-bar" >
+                                <div className="input-group"  >
+                                    <label for="searchBar" className="form-label">Filter Title</label>
+                                    <input
+                                        className="form-control"
+                                        type="text"
+                                        onChange={onChangeHandler}
+                                        name="searchValue"
+                                        value={searchValue}
+                                        placeholder="Filter titles"
+                                        id="searchBar"
+                                    />
+                                </div>
+                            </div>
+                        </td>
+                        <td className="genreFilter">
+                            <label>
+                                Filter Genre
+                            <select className="form-select" aria-label="Genres" >
+                                    <option selected>(Any Genre)</option>
+
+                                    <option value="genre1">Genre 1</option>
+                                    <option value="genre2">Genre 2</option>
+                                    <option value="genre3">Genre 3</option>
+                                    <option value="genre4">Genre 4</option>
+
+                                </select>
+
+                            </label>
+                        </td>
+
+                        <td className="sortFiler">
+
+                            <select className="form-select" aria-label="Sort Column" >
+                                <option selected>(None)</option>
+
+                                <option value="genre1">Genre 1</option>
+                                <option value="genre2">Genre 2</option>
+                                <option value="genre3">Genre 3</option>
+                                <option value="genre4">Genre 4</option>
+
+                            </select>
 
 
-                        />
-                    </div>
-                </div>
-                <div className="selectFilter">
-                    <select>
-                        <option value="genre1">Genre 1</option>
-                        <option value="genre2">Genre 2</option>
-                        <option value="genre3">Genre 3</option>
-                        <option value="genre4">Genre 4</option>
+                        </td>
 
-                    </select>
+                        <td className="asc-dsc">
 
-                </div>
-            </div>
+                            <select className="form-select" aria-label="Sort Direction" >
+                                <option selected>ASC</option>
+
+                                <option value="genre1">Genre 1</option>
+                                <option value="genre2">Genre 2</option>
+                                <option value="genre3">Genre 3</option>
+                                <option value="genre4">Genre 4</option>
+
+                            </select>
+
+
+                        </td>
+
+                        <td className="rowLimit">
+
+                            <select className="form-select" aria-label="Row Limit" >
+                                <option selected>50</option>
+
+                                <option value="genre1">Genre 1</option>
+                                <option value="genre2">Genre 2</option>
+                                <option value="genre3">Genre 3</option>
+                                <option value="genre4">Genre 4</option>
+
+                            </select>
+
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
 
 
             <table className="table">
