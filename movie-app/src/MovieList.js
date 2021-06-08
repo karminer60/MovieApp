@@ -11,14 +11,17 @@ import React, { useState } from 'react'
 //passing state through props from App
 export default function MovieList(props) {
     const { movies } = props;
-    const [searchValue, setSearchValue] = useState('');
+    const [filteredValues, setFilteredValues] = useState({
+        searchValue:'', genre: 'action', direction: 'ascending', column: 'title', 
+    });
+    
+    function onChangeHandler(event) {
+        setFilteredValues(event.target.value.toLowerCase());
+    }
 
-    const onChangeHandler = e => {
-        setSearchValue(e.target.value.toLowerCase());
-    };
     //filtered variable checks for no movies list, else filters for searchValue set in onChangeHandler through user input event
     //filtered variable is made available to provide 'no results message' in return
-    const filtered = movies === null ? null : movies.filter(movie => movie.title.toLowerCase().includes(searchValue));
+    const filtered = movies === null ? null : movies.filter(movie => movie.title.toLowerCase().includes(filteredValues.searchValue) && movies.genres.includes(filteredValues.genre));
 
     //state in input changed through onChange event and onChangeHandler, event.target.value has what it is changed to; input is a controlled component
     return (
@@ -37,7 +40,7 @@ export default function MovieList(props) {
                                         type="text"
                                         onChange={onChangeHandler}
                                         name="searchValue"
-                                        value={searchValue}
+                                        value={filteredValues.searchValue}
                                         placeholder="Filter titles"
                                         id="searchBar"
                                     />
@@ -47,7 +50,7 @@ export default function MovieList(props) {
                         <td className="genreFilter">
                             <label>
                                 Filter Genre
-                            <select className="form-select" aria-label="Genres" >
+                            <select className="form-select" aria-label="Genres" onChange={onChangeHandler} >
                                     <option selected>(Any Genre)</option>
 
                                     <option value="genre1">Genre 1</option>
@@ -61,48 +64,51 @@ export default function MovieList(props) {
                         </td>
 
                         <td className="sortFiler">
+                            <label>
+                                Sort Column
+                            <select className="form-select" aria-label="Sort Column" onChange={onChangeHandler} >
+                                    <option selected>(None)</option>
 
-                            <select className="form-select" aria-label="Sort Column" >
-                                <option selected>(None)</option>
+                                    <option value="genre1">Genre 1</option>
+                                    <option value="genre2">Genre 2</option>
+                                    <option value="genre3">Genre 3</option>
+                                    <option value="genre4">Genre 4</option>
 
-                                <option value="genre1">Genre 1</option>
-                                <option value="genre2">Genre 2</option>
-                                <option value="genre3">Genre 3</option>
-                                <option value="genre4">Genre 4</option>
-
-                            </select>
-
+                                </select>
+                            </label>
 
                         </td>
 
                         <td className="asc-dsc">
+                            <label className="form-label">
+                                Sort Direction
+                            <select className="form-select" aria-label="Sort Direction" onChange={onChangeHandler} >
+                                    <option selected>ASC</option>
 
-                            <select className="form-select" aria-label="Sort Direction" >
-                                <option selected>ASC</option>
+                                    <option value="genre1">Genre 1</option>
+                                    <option value="genre2">Genre 2</option>
+                                    <option value="genre3">Genre 3</option>
+                                    <option value="genre4">Genre 4</option>
 
-                                <option value="genre1">Genre 1</option>
-                                <option value="genre2">Genre 2</option>
-                                <option value="genre3">Genre 3</option>
-                                <option value="genre4">Genre 4</option>
-
-                            </select>
-
+                                </select>
+                            </label>
 
                         </td>
 
                         <td className="rowLimit">
+                            <label>
+                                Row Limit
+                            <select className="form-select" aria-label="Row Limit" onChange={onChangeHandler}  >
+                                    <option selected>50</option>
 
-                            <select className="form-select" aria-label="Row Limit" >
-                                <option selected>50</option>
+                                    <option value="genre1">Genre 1</option>
+                                    <option value="genre2">Genre 2</option>
+                                    <option value="genre3">Genre 3</option>
+                                    <option value="genre4">Genre 4</option>
 
-                                <option value="genre1">Genre 1</option>
-                                <option value="genre2">Genre 2</option>
-                                <option value="genre3">Genre 3</option>
-                                <option value="genre4">Genre 4</option>
+                                </select>
 
-                            </select>
-
-
+                            </label>
                         </td>
                     </tr>
                 </tbody>
