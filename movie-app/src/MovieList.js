@@ -10,18 +10,37 @@ import React, { useState } from 'react'
 
 //passing state through props from App
 export default function MovieList(props) {
+
     const { movies } = props;
+
+    const genreCounter = {}
+    if (movies != null) {
+
+
+        for (const movie of movies) {
+            for (const genre of movie.genres) {
+                if (genre in genreCounter) {
+                    genreCounter[genre] += 1
+                }
+
+                else {
+                    genreCounter[genre] = 1
+                }
+
+            }
+        }
+    }
     const [filteredValues, setFilteredValues] = useState({
-        searchValue:'', genre: 'action', direction: 'ascending', column: 'title', 
+        searchValue: '', genre: 'Adventure', direction: 'ascending', column: 'title',
     });
-    
+
     function onChangeHandler(event) {
-        setFilteredValues(event.target.value.toLowerCase());
+        setFilteredValues({ ...filteredValues, [event.target.name]: event.target.value });
     }
 
     //filtered variable checks for no movies list, else filters for searchValue set in onChangeHandler through user input event
     //filtered variable is made available to provide 'no results message' in return
-    const filtered = movies === null ? null : movies.filter(movie => movie.title.toLowerCase().includes(filteredValues.searchValue) && movies.genres.includes(filteredValues.genre));
+    const filtered = movies === null ? null : movies.filter(movie => movie.title.toLowerCase().includes(filteredValues.searchValue.toLowerCase()) && movie.genres.includes(filteredValues.genre));
 
     //state in input changed through onChange event and onChangeHandler, event.target.value has what it is changed to; input is a controlled component
     return (
@@ -50,13 +69,12 @@ export default function MovieList(props) {
                         <td className="genreFilter">
                             <label>
                                 Filter Genre
-                            <select className="form-select" aria-label="Genres" onChange={onChangeHandler} >
-                                    <option selected>(Any Genre)</option>
+                            {/* mapping through genreCounter object to create select options that display each genre's count */}
+                            <select name="genre" className="form-select" aria-label="Genres" value={filteredValues.genre} onChange={onChangeHandler}  >
+                                    <option value="">(Any Genre)</option>
+                                    {Object.entries(genreCounter).map(([key, value]) => <option value={key}>{key} ({value})</option>)}
 
-                                    <option value="genre1">Genre 1</option>
-                                    <option value="genre2">Genre 2</option>
-                                    <option value="genre3">Genre 3</option>
-                                    <option value="genre4">Genre 4</option>
+
 
                                 </select>
 
