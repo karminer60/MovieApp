@@ -72,13 +72,13 @@ export default function MovieList(props) {
     return (
         <>
             <h1>Top Movies</h1>
-            <table className="table" style={{ background: "#eee", paddingBottom: "15px", paddingLeft: "15px" }} >
+            <table className="table" style={{ background: "#eee" }} >
 
                 <tbody>
                     <tr>
-                        <td>
-                            <div className="search-bar" >
-                                <div className="input-group"  >
+                        <td> 
+                            <div className="search-bar">
+                                <div className="input-group">
                                     <label for="searchBar" className="form-label">Filter Title</label>
                                     <input
                                         className="form-control"
@@ -94,7 +94,7 @@ export default function MovieList(props) {
                         </td>
                         <td className="genreFilter">
                             <label>
-                                Filter Genre
+                                Filter Genre&nbsp;
                             {/* mapping through genreCounter object to create select options that display each genre's count */}
                                 <select name="genre" className="form-select" aria-label="Genres" value={filteredValues.genre} onChange={onChangeHandler} >
                                     <option value="">(Any Genre)</option>
@@ -110,7 +110,7 @@ export default function MovieList(props) {
 
                         <td className="sortFilter">
                             <label>
-                                Sort Column
+                                Sort Column&nbsp;
                             <select name="sortColumn" className="form-select" aria-label="Sort Column" onChange={onChangeHandler} value={filteredValues.sortColumn}  >
                                     <option value="">(None)</option>
 
@@ -128,7 +128,7 @@ export default function MovieList(props) {
 
                         <td className="asc-dsc">
                             <label className="form-label">
-                                Sort Direction
+                                Sort Direction&nbsp;
                             <select name="direction" className="form-select" aria-label="Sort Direction" onChange={onChangeHandler} value={filteredValues.direction}  >
                                     <option value="asc">ASC</option>
 
@@ -141,7 +141,7 @@ export default function MovieList(props) {
 
                         <td className="rowLimit">
                             <label>
-                                Row Limit
+                                Row Limit&nbsp;
                                 <input
                                     type="number"
                                     name="rowLimit"
