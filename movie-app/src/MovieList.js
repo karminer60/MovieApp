@@ -9,6 +9,10 @@ import React, { useState } from 'react'
 
 
 //passing state through props from App
+
+const filteredDefaults = {
+    searchValue: '', genre: '', direction: 'asc', sortColumn: '', rowLimit: '50'
+}
 export default function MovieList(props) {
 
     const { movies } = props;
@@ -30,17 +34,39 @@ export default function MovieList(props) {
             }
         }
     }
-    const [filteredValues, setFilteredValues] = useState({
-        searchValue: '', genre: 'Adventure', direction: 'ascending', column: 'title',
-    });
+    
+    const stored = window.localStorage.getItem('filteredValues');
+    const [filteredValues, setFilteredValues] = useState(stored!= null? JSON.parse(stored): filteredDefaults);
 
     function onChangeHandler(event) {
-        setFilteredValues({ ...filteredValues, [event.target.name]: event.target.value });
+        const values = { ...filteredValues, [event.target.name]: event.target.value }
+        setFilteredValues(values);
+        window.localStorage.setItem('filteredValues',JSON.stringify(values))
     }
 
     //filtered variable checks for no movies list, else filters for searchValue set in onChangeHandler through user input event
     //filtered variable is made available to provide 'no results message' in return
-    const filtered = movies === null ? null : movies.filter(movie => movie.title.toLowerCase().includes(filteredValues.searchValue.toLowerCase()) && movie.genres.includes(filteredValues.genre));
+    let results = null
+    if (movies != null) {
+        
+        results = movies.filter(movie => movie.title.toLowerCase().includes(filteredValues.searchValue.toLowerCase()) && (filteredValues.genre == "" || movie.genres.includes(filteredValues.genre)));
+        if (filteredValues.sortColumn !== "") {
+            results.sort(
+                (a, b) => {
+                    if (a[filteredValues.sortColumn] > b[filteredValues.sortColumn]) {
+
+                        return filteredValues.direction === "asc" ? 1 : -1;
+                    }
+                    if (a[filteredValues.sortColumn] < b[filteredValues.sortColumn]) {
+                        return filteredValues.direction === "asc" ? -1 : 1;
+                    }
+                    return 0;
+                }
+            )
+        }
+        results = results.slice(0, Number(filteredValues.rowLimit))
+    }
+
 
     //state in input changed through onChange event and onChangeHandler, event.target.value has what it is changed to; input is a controlled component
     return (
@@ -70,8 +96,9 @@ export default function MovieList(props) {
                             <label>
                                 Filter Genre
                             {/* mapping through genreCounter object to create select options that display each genre's count */}
-                            <select name="genre" className="form-select" aria-label="Genres" value={filteredValues.genre} onChange={onChangeHandler}  >
+                                <select name="genre" className="form-select" aria-label="Genres" value={filteredValues.genre} onChange={onChangeHandler} >
                                     <option value="">(Any Genre)</option>
+                                    {/*[key,value] same as key=pair1 and value=pair2*/}
                                     {Object.entries(genreCounter).map(([key, value]) => <option value={key}>{key} ({value})</option>)}
 
 
@@ -81,16 +108,18 @@ export default function MovieList(props) {
                             </label>
                         </td>
 
-                        <td className="sortFiler">
+                        <td className="sortFilter">
                             <label>
                                 Sort Column
-                            <select className="form-select" aria-label="Sort Column" onChange={onChangeHandler} >
-                                    <option selected>(None)</option>
+                            <select name="sortColumn" className="form-select" aria-label="Sort Column" onChange={onChangeHandler} value={filteredValues.sortColumn}  >
+                                    <option value="">(None)</option>
 
-                                    <option value="genre1">Genre 1</option>
-                                    <option value="genre2">Genre 2</option>
-                                    <option value="genre3">Genre 3</option>
-                                    <option value="genre4">Genre 4</option>
+                                    <option value="title">Title</option>
+                                    <option value="year">Year</option>
+                                    <option value="rating">Raiting</option>
+                                    <option value="runtimeMins">Runtime</option>
+                                    <option value="votes">Votes</option>
+
 
                                 </select>
                             </label>
@@ -100,13 +129,10 @@ export default function MovieList(props) {
                         <td className="asc-dsc">
                             <label className="form-label">
                                 Sort Direction
-                            <select className="form-select" aria-label="Sort Direction" onChange={onChangeHandler} >
-                                    <option selected>ASC</option>
+                            <select name="direction" className="form-select" aria-label="Sort Direction" onChange={onChangeHandler} value={filteredValues.direction}  >
+                                    <option value="asc">ASC</option>
 
-                                    <option value="genre1">Genre 1</option>
-                                    <option value="genre2">Genre 2</option>
-                                    <option value="genre3">Genre 3</option>
-                                    <option value="genre4">Genre 4</option>
+                                    <option value="dsc">DSC</option>
 
                                 </select>
                             </label>
@@ -116,15 +142,26 @@ export default function MovieList(props) {
                         <td className="rowLimit">
                             <label>
                                 Row Limit
-                            <select className="form-select" aria-label="Row Limit" onChange={onChangeHandler}  >
-                                    <option selected>50</option>
+                                <input
+                                    type="number"
+                                    name="rowLimit"
+                                    min="1"
+                                    max="50"j
+                                    onChange={onChangeHandler}
+                                    value={filteredValues.rowLimit}
+                                />
 
-                                    <option value="genre1">Genre 1</option>
-                                    <option value="genre2">Genre 2</option>
-                                    <option value="genre3">Genre 3</option>
-                                    <option value="genre4">Genre 4</option>
+                            </label>
+                        </td>
+                        <td className="reset">
+                            <label>
 
-                                </select>
+                                <button onClick={()=> {
+                                setFilteredValues(filteredDefaults);
+                                window.localStorage.setItem('filteredValues', JSON.stringify(filteredDefaults));
+                                }}> 
+                                Reset Filters 
+                                </button>
 
                             </label>
                         </td>
@@ -150,9 +187,9 @@ export default function MovieList(props) {
                 <tbody>
                     {   //conditional (ternary expression) in case movies are not loaded yet
                         //+ conditional (ternary expression) in case there are no results for searched movies
-                        filtered === null ? <tr><td>Loading data...</td></tr> :
-                            filtered.length === 0 ? <tr><td>No records match your search.</td></tr> :
-                                filtered.map(movie => (
+                        results === null ? <tr><td>Loading data...</td></tr> :
+                            results.length === 0 ? <tr><td>No records match your search.</td></tr> :
+                                results.map(movie => (
                                     <tr>
                                         <td>
                                             <img style={{ width: "8rem", height: "11rem" }} src={movie.imageUrl} />
