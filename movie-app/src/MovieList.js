@@ -192,7 +192,7 @@ export default function MovieList(props) {
                                 results.map(movie => (
                                     <tr>
                                         <td>
-                                            <img style={{ width: "8rem", height: "11rem" }} src={movie.imageUrl} />
+                                            <img alt="url" style={{ width: "8rem", height: "11rem" }} src={movie.imageUrl} />
 
                                         </td>
                                         <td>
