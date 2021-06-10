@@ -49,7 +49,7 @@ export default function MovieList(props) {
     let results = null
     if (movies != null) {
         
-        results = movies.filter(movie => movie.title.toLowerCase().includes(filteredValues.searchValue.toLowerCase()) && (filteredValues.genre == "" || movie.genres.includes(filteredValues.genre)));
+        results = movies.filter(movie => movie.title.toLowerCase().includes(filteredValues.searchValue.toLowerCase()) && (filteredValues.genre === "" || movie.genres.includes(filteredValues.genre)));
         if (filteredValues.sortColumn !== "") {
             results.sort(
                 (a, b) => {
@@ -228,11 +228,11 @@ export default function MovieList(props) {
                                         <td>
                                             <p>{movie.genres.map((genre, index) => {
 
-                                                if (index == 0) {
+                                                if (index === 0) {
                                                     return genre;
                                                 }
 
-                                                else if (index == movie.genres.length - 1) {
+                                                else if (index === movie.genres.length - 1) {
                                                     return " and " + genre;
                                                 }
 
