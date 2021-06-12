@@ -1,13 +1,5 @@
 import React, { useState } from 'react'
 
-
-/*- Year
-  - Rating
-  - Runtime
-  - Votes
-  - Genres */
-
-
 //passing state through props from App
 
 const filteredDefaults = {
